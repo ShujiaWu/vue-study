@@ -3,8 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import axios from '@/backend/index'
 
 Vue.config.productionTip = false
+
+// 将axios注册成为Vue原型属性
+Vue.prototype.$http = axios
 
 /* eslint-disable no-new */
 new Vue({

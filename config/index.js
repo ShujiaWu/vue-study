@@ -11,7 +11,15 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/wallet': {
+        target: 'http://192.168.1.124:18082',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/wallet': '/wallet'
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
