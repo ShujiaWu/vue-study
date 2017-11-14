@@ -5,14 +5,20 @@
     <template>
       <button @click="login">模拟登陆</button>
       <br>
-      <file-upload @on-change="fileChange($event)" @on-error="fileError" 
+      <file-upload
         :target="fileUploadTarget"
         :max-size="-1" :max-width="1000" :quality="92"
-        :max-length="-1"
+        :max-length="2"
         :default="defaultList"
         :data="postData"
         :multiple="true"
-        width="188" height="118"></file-upload>
+        width="188" height="118"
+        @on-success="fileUploadSuccess"
+        @on-error="fileUploadError"
+        @on-finish="fileUploadFinish"
+        @on-delete="fileUploadDelete"
+        @on-change="fileUploadChange"
+        ></file-upload>
     </template>
   </div>
 </template>
@@ -37,11 +43,25 @@
       login () {
         Service.login()
       },
-      fileChange (files) {
+      fileUploadFinish (files) {
+        console.log('文件上传结束')
         console.log(files)
       },
-      fileError (event) {
-        console.log(event)
+      fileUploadSuccess (file) {
+        console.log('文件上传成功')
+        console.log(file)
+      },
+      fileUploadError (msg) {
+        console.log('文件上传错误')
+        console.log(msg)
+      },
+      fileUploadDelete (file) {
+        console.log('文件删除成功')
+        console.log(file)
+      },
+      fileUploadChange (file) {
+        console.log('文件改变')
+        console.log(file)
       }
     }
   }

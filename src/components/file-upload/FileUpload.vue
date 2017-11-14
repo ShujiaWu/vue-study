@@ -1,32 +1,22 @@
 <template>
-  <div class="image-upload" :style="{height: `${height}px`, width: `${width}px`}">
+  <div class="image-upload">
     <!-- 图片预览区域 -->
-    <!-- <div class="perview-area" v-for="(item,index) in uploaded" :key="index" > -->
-      <!-- 预览 -->
-      <!-- <div :style="{'background-image': `url(${item.url})`}" v-if="item.status === 'finished'">
-        <img src="./images/close.png" class="close" @click="deleteFile(item)">
-      </div> -->
-      <!-- 进度条 -->
-      <!-- <div style="background-color: rgba(0,0,0,0.5)" :style="{'background-image': getImagesBg(item)}" v-else>
-        <mt-progress :value="item.progress" :bar-height="5" class="progress" v-if="item.showProgress" :style="{top: `${(height-5) / 2}px`}"></mt-progress>
-      </div>
-    </div> -->
-    <div class="perview-area" v-for="(item,index) in uploaded" :key="index" :style="{'background-image': `url(${item.url})`}">
+    <div class="perview-area" v-for="(item,index) in uploaded" :key="index" :style="{'background-image': `url(${item.url})`, height: `${height}px`, width: `${width}px`}">
       <!-- 关闭按钮 -->
-      <img src="./images/close.png" class="close" @click="deleteFile(item)">
+      <img src="./images/close.png" class="close" @click="deleteFile(item)" v-if="item.deletealed">
       <!-- 进度条 -->
       <div class="progress-cover" style="background-color: rgba(0,0,0,0.5)" v-if="item.status !== 'finished'">
         <w-progress :value="item.progress" :bar-height="5" class="progress" v-if="item.showProgress" :style="{top: `${(height-5) / 2}px`}"></w-progress>
       </div>
     </div>
     <!-- 图片选择 -->
-    <div class="upload-area" v-if="maxLength <= 0 || uploaded.length < maxLength" :style="bg && {'background-image': `url(${bg})`}">
+    <div class="upload-area" v-if="maxLength <= 0 || uploaded.length < maxLength" :style="uploadAreaStyle">
       <label :for="id">
         <div style="height:100%;text-align:center">
         </div>
       </label>
       <form class="form">
-        <input class="uploader-input" :accept="accept" :multiple="multiple" type="file" hidden @change="uploadInputFileChange($event)" :id="id">
+        <input class="uploader-input" :accept="accept" :multiple="multiple && maxLength !== 0 && maxLength !== 1" type="file" hidden @change="uploadInputFileChange($event)" :id="id">
       </form>
     </div>
   </div>
@@ -54,6 +44,7 @@
         type: String,
         default: 'image/*'
       },
+      // 文件数
       maxLength: {
         type: Number,
         default: 1
@@ -70,6 +61,7 @@
         type: [String, Number],
         default: 118
       },
+      // 文件大小限制
       maxSize: {
         type: Number,
         default: -1
@@ -99,7 +91,8 @@
           uuid: element.uuid,
           progress: 100,
           showProgress: false,
-          status: 'finished'
+          status: 'finished',
+          deletealed: true
         })
       })
     },
@@ -115,6 +108,7 @@
         progress: 0,
         // 图片压缩对象
         compress: null,
+        // 上传队列锁
         taskLock: false
       }
     },
@@ -127,7 +121,8 @@
             uuid: element.uuid,
             progress: 100,
             showProgress: false,
-            status: 'finished'
+            status: 'finished',
+            deletealed: true
           })
         })
       },
@@ -135,6 +130,19 @@
         if (val !== oldVal) {
           this.compress = ImageCompress(val)
         }
+      }
+    },
+    computed: {
+      /** 上传区域的样式 */
+      uploadAreaStyle () {
+        let style = {
+          height: `${this.height}px`,
+          width: `${this.width}px`
+        }
+        if (this.bg) {
+          style['background-image'] = `url(${this.bg})`
+        }
+        return style
       }
     },
     methods: {
@@ -149,8 +157,12 @@
           let file = files[i]
           // 比较文件大小限制
           if (this.maxSize > 0 && file.size > this.maxSize) {
-            this.$emit('on-error', '文件大小超过限制')
+            this.$emit('on-error', '文件大小超过限制', file)
             continue
+          }
+          if (this.uploaded.length + 1 > this.maxLength) {
+            this.$emit('on-error', '文件数量超过限制', file)
+            break
           }
           // 生成文件对象信息
           let obj = {
@@ -158,7 +170,8 @@
             url: undefined,
             status: 'waitting',
             progress: 0,
-            showProgress: true
+            showProgress: true,
+            deletealed: true
           }
           // 预览
           let reader = new FileReader()
@@ -188,6 +201,8 @@
         let file = this.uploading.shift()
         let _this = this
         let param = new FormData()
+        // 上传阶段不允许移除
+        file.deletealed = false
         // post参数
         for (let key in this.data) {
           if (this.data.hasOwnProperty(key)) {
@@ -214,6 +229,7 @@
                 _this.uploadError(file)
               }
               _this.taskLock = false
+              file.deletealed = true
               _this.upload()
             }
           }
@@ -226,12 +242,14 @@
           xhr.send(param)
         })
       },
+      /** 文件上传成功 */
       uploadSuccess (file) {
         file.status = 'finished'
         file.progress = 100
         file.showProgress = false
         this.$emit('on-success', file)
       },
+      /** 所有文件上传结束 */
       finish () {
         let arr = []
         this.uploaded.forEach((element) => {
@@ -250,19 +268,28 @@
           }
         }, this)
         this.$emit('on-change', arr)
+        this.$emit('on-finish', arr)
       },
+      /** 文件上传错误 */
       uploadError (file) {
         let pos = this.uploaded.indexOf(file)
         if (pos >= 0) {
           this.uploaded.splice(pos, 1)
         }
-        alert(file.response.message)
-        this.$emit('on-error', file.response)
+        this.$emit('on-error', file.response, file)
       },
+      /** 删除文件 */
       deleteFile (file) {
         let pos = this.uploaded.indexOf(file)
         if (pos >= 0) {
           this.uploaded.splice(pos, 1)
+        }
+        let posUploading = this.uploading.indexOf(file)
+        if (posUploading >= 0) {
+          this.uploading.splice(posUploading, 1)
+        }
+        if (file.status === 'waitting') {
+          return
         }
         let arr = []
         this.uploaded.forEach((element) => {
@@ -294,10 +321,8 @@
 
   .perview-area,
   .upload-area {
-    display: inline-block;
-    width: 100%;
-    height: 100%;
     vertical-align: middle;
+    margin-bottom: 10px;
   }
 
   .perview-area {
