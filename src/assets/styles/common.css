@@ -1,0 +1,177 @@
+/*距离位置*/
+/*内边距*/
+.padding-5{ padding: 5px;}
+.padding-t-5{ padding-top: 5px;}
+.padding-r-5{ padding-right: 5px;}
+.padding-b-5{ padding-bottom: 5px;}
+.padding-l-5{ padding-left: 5px;}
+
+.padding-10{ padding: 10px;}
+.padding-t-10{ padding-top: 10px;}
+.padding-r-10{ padding-right: 10px;}
+.padding-b-10{ padding-bottom: 10px;}
+.padding-l-10{ padding-left: 10px;}
+
+.padding-15{ padding: 15px;}
+.padding-t-15{ padding-top: 15px;}
+.padding-r-15{ padding-right: 15px;}
+.padding-b-15{ padding-bottom: 15px;}
+.padding-l-15{ padding-left: 15px;}
+
+.padding-20{ padding: 20px;}
+.padding-t-20{ padding-top: 20px;}
+.padding-r-20{ padding-right: 20px;}
+.padding-b-20{ padding-bottom: 20px;}
+.padding-l-20{ padding-left: 20px;}
+
+.padding-25{ padding: 25px;}
+.padding-t-25{ padding-top: 25px;}
+.padding-r-25{ padding-right: 25px;}
+.padding-b-25{ padding-bottom: 25px;}
+.padding-l-25{ padding-left: 25px;}
+
+.padding-30{ padding: 30px;}
+.padding-t-30{ padding-top: 30px;}
+.padding-r-30{ padding-right: 30px;}
+.padding-b-30{ padding-bottom: 30px;}
+.padding-l-30{ padding-left: 30px;}
+
+.padding-35{ padding: 35px;}
+.padding-t-35{ padding-top: 35px;}
+.padding-r-35{ padding-right: 35px;}
+.padding-b-35{ padding-bottom: 35px;}
+.padding-l-35{ padding-left: 35px;}
+
+.padding-40{ padding: 40px;}
+.padding-t-40{ padding-top: 40px;}
+.padding-r-40{ padding-right: 40px;}
+.padding-b-40{ padding-bottom: 40px;}
+.padding-l-40{ padding-left: 40px;}
+
+/*外边距*/
+.margin-5{ margin:5px;}
+.margin-t-5{ margin-top:5px;}
+.margin-r-5{ margin-right:5px;}
+.margin-b-5{ margin-bottom:5px;}
+.margin-l-5{ margin-left:5px;}
+
+.margin-10{ margin:10px;}
+.margin-t-10{ margin-top:10px;}
+.margin-r-10{ margin-right:10px;}
+.margin-b-10{ margin-bottom:10px;}
+.margin-l-10{ margin-left:10px;}
+
+.margin-15{ margin:15px;}
+.margin-t-15{ margin-top:15px;}
+.margin-r-15{ margin-right:15px;}
+.margin-b-15{ margin-bottom:15px;}
+.margin-l-15{ margin-left:15px;}
+
+.margin-20{ margin:20px;}
+.margin-t-20{ margin-top:20px;}
+.margin-r-20{ margin-right:20px;}
+.margin-b-20{ margin-bottom:20px;}
+.margin-l-20{ margin-left:20px;}
+
+.margin-25{ margin:25px;}
+.margin-t-25{ margin-top:25px;}
+.margin-r-25{ margin-right:25px;}
+.margin-b-25{ margin-bottom:25px;}
+.margin-l-25{ margin-left:25px;}
+
+.margin-30{ margin:30px;}
+.margin-t-30{ margin-top:30px;}
+.margin-r-30{ margin-right:30px;}
+.margin-b-30{ margin-bottom:30px;}
+.margin-l-30{ margin-left:30px;}
+
+.margin-35{ margin:35px;}
+.margin-t-35{ margin-top:35px;}
+.margin-r-35{ margin-right:35px;}
+.margin-b-35{ margin-bottom:35px;}
+.margin-l-35{ margin-left:35px;}
+
+.margin-40{ margin:40px;}
+.margin-t-40{ margin-top:40px;}
+.margin-r-40{ margin-right:40px;}
+.margin-b-40{ margin-bottom:40px;}
+.margin-l-40{ margin-left:40px;}
+
+/* 文字位置 */
+.text-left {text-align: left;}
+.text-right {text-align: right;}
+.text-center { text-align: center;}
+
+/* 文字大小 */
+.text-10 {font-size: 10px}
+.text-11 {font-size: 11px}
+.text-12 {font-size: 12px}
+.text-13 {font-size: 13px}
+.text-14 {font-size: 14px}
+.text-15 {font-size: 15px}
+.text-16 {font-size: 16px}
+.text-17 {font-size: 17px}
+.text-18 {font-size: 18px}
+.text-19 {font-size: 19px}
+.text-20 {font-size: 20px}
+
+.text-primary {color:#3399ff;}
+.text-light-primary {color:#5cadff;}
+.text-dark-primary {color:#3091f2;}
+.text-info {color:#3399ff;}
+.text-success {color:#00cc66;}
+.text-warning {color:#ff9900;}
+.text-error {color:#ff3300;}
+.text-title {color:#464c5b;}
+.text-content {color:#657180;}
+.text-sub-content {color:#9ea7b4;}
+.text-disabled {color:#c3cbd6;}
+
+/* 水平居中 */
+.v-align-middle:after{
+    content:'';
+    display: inline-block;
+    width: 0;
+    height: 100%;
+    vertical-align: middle;
+}
+.v-middle{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* 浮动与清除浮动*/
+.float-left{
+    float: left;
+}
+.float-right{
+    float: right;
+}
+.clear-fix:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+button {
+    background: rgb(34, 154, 255);
+    color: #FFF;
+    font-size: 18px;
+    line-height: 1;
+    padding: 13px 0;
+    border-radius: 5px;
+    text-align: center;
+    display: block;
+    width: 100%;
+    border: none;
+    outline: none;
+  }
+  button.disabled,
+  button[disabled]{
+    background: rgba(34, 154, 255,0.7);
+    color: rgba(51,51,51,0.3);
+  }
+  button:active {
+    background: rgb(34, 154, 255);
+    color: #EAEAEA;
+  }

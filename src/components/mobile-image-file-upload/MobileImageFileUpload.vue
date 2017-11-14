@@ -23,7 +23,6 @@
 </template>
 
 <script>
-  // import $ from 'jquery'
   import Progress from '@/components/progress/Progress'
   import ImageCompress from '@/utils/image-compress'
   export default {

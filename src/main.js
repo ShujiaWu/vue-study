@@ -5,6 +5,10 @@ import App from './App'
 import router from './router'
 import axios from '@/backend/index'
 
+import '@/assets/styles/reset.css'
+import '@/assets/styles/common.css'
+import '@/assets/styles/main.css'
+
 Vue.config.productionTip = false
 
 // 将axios注册成为Vue原型属性

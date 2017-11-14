@@ -1,0 +1,51 @@
+* {
+  -webkit-touch-callout: none;
+  /*-webkit-user-select:none !important;*/
+  /*-khtml-user-select:none !important;*/
+  /*-moz-user-select:none !important;*/
+  /*-ms-user-select:none !important;*/
+  /*user-select:none !important;*/
+  -webkit-tap-highlight-color: transparent;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  outline: none;
+}
+
+html {
+  -webkit-text-size-adjust: none;
+  /*文字基准10px*/
+  font-size: 62.5%;
+}
+
+html,
+body {
+  font-family: 'PingFang-SC-Regular', 'Helvetica Neue', 'Helvetica', 'Microsoft YaHei', 'sans-serif', 'Avenir', 'Helvetica', 'Arial';
+  /* 对字体进行抗锯齿渲染可以使字体看起来会更清晰舒服 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  line-height: 1;
+}
+
+
+img {
+  border: none;
+  line-height: 1;
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+input {
+  outline: none;
+}
+
