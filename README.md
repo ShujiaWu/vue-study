@@ -2,6 +2,11 @@
 
 > A Vue.js project
 
+目前组件：
+
+1. 进度条
+1. 移动端文件上传
+
 ## Build Setup
 
 ``` bash
