@@ -1,7 +1,7 @@
 <template>
   <div class="image-upload">
     <!-- 图片预览区域 -->
-    <div class="perview-area" v-for="(item,index) in uploaded" :key="index" :style="{'background-image': `url(${item.url})`, height: `${height}px`, width: `${width}px`}">
+    <div class="perview-area" v-for="(item,index) in uploaded" :key="index" :style="perviewAreaStyle(item)">
       <!-- 关闭按钮 -->
       <img src="./images/close.png" class="close" @click="deleteFile(item)" v-if="item.deletealed">
       <!-- 进度条 -->
@@ -148,6 +148,16 @@
       getImagesBg (file) {
         let result = `url('${file.url}')`
         return result
+      },
+      perviewAreaStyle (file) {
+        let style = {
+          height: `${this.height}px`,
+          width: `${this.width}px`
+        }
+        if (file.url) {
+          style['background-image'] = `url(${file.url})`
+        }
+        return style
       },
       // input中选择的文件发生变化的时候
       uploadInputFileChange (event) {
